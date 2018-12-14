@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<template id="report_stocks">
+    <t t-call="web.html_container">
+    <t t-call="web.internal_layout">
+            <div class="page">
+                <div align="center"><strong><span t-esc="res_company.name"/>: Mouvements des stocks du <t t-esc="date_start" t-options="{'widget': 'datetime'}"/> au <t t-esc="date_stop" t-options="{'widget': 'datetime'}"/></strong></div><br/>
+                <t t-if="location">Emplacement: <span t-esc="nomlocation" /></t>
+
+                <table class="table table-condensed">
+                    <thead>
+                        <tr class="text-center">
+                            <th>Code</th>
+                            <th>Produit</th>
+                            <th>Stock initial</th>
+                            <th>Quantité entrée</th>
+                            <th>Quantité sortie</th>
+                            <th>Stock final</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="alines" t-as="aline">
+                            <tr>
+                                <!--<td><img t-if="aline['barcode']" t-att-src="'data:image/png;base64,%s' % aline['barcode']"/></td>-->
+                                <!--<td><t t-set="qr_src">/report/barcode/?type=QR&amp;value=<t t-esc="aline['barcode']" />&amp;width=50&amp;height=15</t><img t-att-src="'%s' % qr_src"/></td>-->
+                                <!--<td><span t-esc="aline['barcode']"/></td>-->
+                                <td><img t-if="aline['barcode'] and len(aline['barcode']) == 13" t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('EAN13', aline['barcode'], 600, 150)" style="width:100%;height:20%;"/>
+                                <img t-elif="aline['barcode'] and len(aline['barcode']) == 8" t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('EAN8', aline['barcode'], 600, 150)" style="width:100%;height:20%;"/>
+                                <img t-else="" t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128', aline['barcode'], 600, 150)" style="width:100%;height:20%;"/>
+                                <span t-esc="aline['barcode']"/></td>
+                                <td><span t-esc="aline['produit']"/></td>
+                                <td align="right"><span t-esc="'{:,.0f}'.format(aline['stinit']).replace(',', ' ').replace('.', ',')"/></td>
+                                <td align="right"><span t-esc="'{:,.0f}'.format(aline['qteent']).replace(',', ' ').replace('.', ',')"/></td>
+                                <td align="right"><span t-esc="'{:,.0f}'.format(aline['qtesort']).replace(',', ' ').replace('.', ',')"/></td>
+                                <td align="right"><span t-esc="'{:,.0f}'.format(aline['stfinal']).replace(',', ' ').replace('.', ',')"/></td>
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+            </div>
+        </t>
+    </t>
+</template>
+</odoo>

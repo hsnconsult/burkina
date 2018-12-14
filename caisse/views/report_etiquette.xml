@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="minimal_layout_inherit" inherit_id="web.minimal_layout">
+		<xpath expr="//head" position="inside">
+			<link rel='stylesheet' href="/caisse/static/src/css/caisse.css"/>
+		</xpath>
+</template>
+<template id="report_bricoetiquette">
+    <t t-call="web.html_container">
+     <t t-call="web.internal_layout">
+        <t t-foreach="docs" t-as="o">
+          <div class="principal">
+            <div class="section1">
+                <div class="produit">
+                    produit
+                </div>
+                <div class="codebarre"> 
+                    barre
+                </div>
+            </div>
+            <div class="section2"> 
+                <div class="prix"> 
+                    prix
+                </div>
+                <div class="categ"> 
+                    CATEGORIE
+                </div>
+            </div>
+            <div class="section3"> 
+                <div class="devise">
+                    DJF
+                </div>
+                <div class="nomcat"> 
+                    A
+                </div>
+            </div>  
+          </div>  
+        </t>
+        </t>
+    </t>
+</template>
+
+</odoo>

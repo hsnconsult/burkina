@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<template id="report_rapcloture">
+    <t t-call="web.html_container">
+     <t t-call="web.internal_layout">
+        <t t-foreach="docs" t-as="o">
+                <div class="page" style="font-family:Arial, Helvetica, sans-serif; ">
+                  <div style="width:100%; text-align:center; font-size:12px" >
+                <h3><span t-esc="res_company.name"/>: Etat de clôture de la caisse / Remise banque</h3>
+                  </div>
+                  <div style="width:100%; text-align:left; font-size:16px" >
+                <strong>Ouverture:</strong><t t-esc="o.start_at" t-options="{'widget': 'datetime'}"/> <br/>
+                <strong>Clôture:</strong><t t-esc="o.stop_at" t-options="{'widget': 'datetime'}"/> 
+                  </div>
+                <div style="width:100%; float:left;">
+                 <div style="width:50%;float:left; padding-left:5px">
+                   <div style="width:100%;font-size:16px; line-height:30px; margin-top:20px" >
+                        <table style="width:85%" class="table">
+						 <thead>
+                           <tr><th colspan="3" align="center"><strong>ENCAISSE</strong></th></tr>
+                           <tr><th align="center"><strong>Nombre</strong></th><th align="center"><strong>Billet/Pièce</strong></th><th align="center"><strong >Sous total</strong></th></tr>
+						 </thead>
+                           <tr t-foreach="o.cash_register_id.cashbox_end_id.cashbox_lines_ids" t-as="ec">
+                             <td align="right"><span t-esc="'{:,.0f}'.format(ec.number).replace(',', ' ').replace('.', ',')"/></td>
+                             <td align="right"><span t-esc="'{:,.0f}'.format(ec.coin_value).replace(',', ' ').replace('.', ',')"/></td>
+                             <td align="right"><span t-esc="'{:,.0f}'.format(ec.subtotal).replace(',', ' ').replace('.', ',')"/></td>
+                           </tr>
+                        </table>
+                    </div>
+                  </div>
+                 <div style="width:50%;float:left; padding-left:25px">
+                   <div style="width:100%;font-size:16px; line-height:30px; margin-top:20px" >
+                        <t t-set="ecart" t-value="0"/>
+                        <t t-set="venteesp" t-value="0"/>
+                        <t t-foreach="o.statement_ids" t-as="st">
+                         <t t-if="st.journal_id.type=='cash'">
+                           <t t-foreach="st.line_ids" t-as="stline">
+                              <t t-if="('comptage' in stline.name) or ('counting' in stline.name)">
+                                 <t t-set="ecart" t-value="ecart+stline.amount"/>
+                              </t>
+                              <t t-if="'Shop' in stline.name">
+                                 <t t-set="venteesp" t-value="venteesp+stline.amount"/>
+                              </t>
+                            </t>
+                           </t>
+                          </t>
+                        <table style="width:80%" class="table">
+						 <thead>
+                           <tr><th colspan="2" align="center"><strong>AJUSTEMENT COMPTABLE</strong></th></tr>
+                           <tr><td><strong>Solde initial</strong></td><td align="right"><span t-esc="'{:,.0f}'.format(o.cash_register_balance_start).replace(',', ' ').replace('.', ',')"/></td></tr>
+                           <tr><td><strong>+     Ventes espèces</strong></td><td align="right"><span t-esc="'{:,.0f}'.format(venteesp).replace(',', ' ').replace('.', ',')"/></td></tr>
+                           <tr><td><strong>(+/-) Ecart</strong></td><td align="right"><span t-esc="'{:,.0f}'.format(ecart).replace(',', ' ').replace('.', ',')"/></td></tr>
+						 </thead>
+                        </table>
+                    </div>
+                  </div>
+                  </div>
+
+                <div style="width:100%; float:left;">
+                 <div style="width:50%;float:left; padding-left:5px">
+                   <div style="width:100%;font-size:20px; line-height:30px;" >
+                        <table style="width:85%" class="table">
+                           <tr><td colspan="2"><strong>Total</strong></td><td align="right"><strong><span t-esc="'{:,.0f}'.format(o.cash_register_balance_end_real).replace(',', ' ').replace('.', ',')"/></strong></td></tr>
+                        </table>
+                    </div>
+                  </div>
+                 <div style="width:50%;float:left; padding-left:25px">
+                   <div style="width:100%;font-size:20px; line-height:30px;" >
+                        <table style="width:80%" class="table">
+                           <tr><td><strong>Solde comptable</strong></td><td align="right"><strong><span t-esc="'{:,.0f}'.format(o.cash_register_balance_end).replace(',', ' ').replace('.', ',')"/></strong></td></tr>
+                        </table>
+                    </div>
+                  </div>
+                 </div>
+
+                <div style="width:100%; float:left; margin-top:100px;">
+                 <div style="width:100%;float:left; padding-left:5px">
+                   <div style="width:100%;font-size:20px; line-height:30px;" >
+                        <strong>Les chèques reçus</strong>
+                        <t t-set="ventecheq" t-value="0"/>
+                        <t t-foreach="o.statement_ids" t-as="st">
+                         <t t-if="st.journal_id.type=='bank'">
+                           <t t-foreach="st.line_ids" t-as="stline">
+                                 <t t-set="ventecheq" t-value="ventecheq+stline.amount"/>
+                            </t>
+                           </t>
+                          </t>
+                        <table style="width:80%" class="table">
+                           <tr><th align="center"><strong>Client</strong></th><th align="center"><strong>Montant</strong></th></tr>
+                           <t t-foreach="o.statement_ids" t-as="st">
+                           <t t-if="st.journal_id.type=='bank'">
+                           <t t-foreach="st.line_ids" t-as="stline">
+                            <tr><td><span t-esc="stline.partner_id.name"/></td>
+                                 <td align="right"><span t-esc="'{:,.0f}'.format(stline.amount).replace(',', ' ').replace('.', ',')"/></td></tr>
+                           <tr><td><strong>Total</strong></td><td  align="right"><strong><span t-esc="'{:,.0f}'.format(ventecheq).replace(',', ' ').replace('.', ',')"/></strong></td></tr>
+                            </t>
+                           </t>
+                           </t>
+                        </table>
+                    </div>
+                  </div>
+                 </div>
+
+    <div class="footer">
+                 <div style="width:50%;float:left; padding-left:5px; font-size:18px; font-weight:bold;">
+                        VISA CAISSIER
+                 </div>
+                 <div style="width:50%;float:left; padding-left:5px; font-size:18px; font-weight:bold; text-align:right;">
+                        VISA CONTROLE
+                 </div>
+    </div>   
+                </div>
+        </t>
+        </t>
+    </t>
+</template>
+
+</odoo>

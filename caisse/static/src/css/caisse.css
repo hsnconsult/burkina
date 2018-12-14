@@ -1,0 +1,53 @@
+
+/* CSS Document */
+
+.principal {
+ width:832px;
+ min-height:272px;
+ border:1px solid #000; 
+}
+.section1 {
+ width:491px;
+ min-height:272px;
+ border:1px solid #000; 
+}
+.section2 {
+ width:265px;
+ min-height:272px;
+ border:1px solid #000; 
+}
+.section2 {
+ width:76px;
+ min-height:272px;
+ border:1px solid #000; 
+}
+.produit {
+ width:491px;
+ min-height:136px;
+ border:1px solid #000; 
+}
+.codebarre {
+ width:491px;
+ min-height:136px;
+ border:1px solid #000;
+}
+.prix {
+ width:265px;
+ min-height:227px;
+ border:1px solid #000; 
+}
+.categ {
+ width:265px;
+ min-height:45px;
+ border:1px solid #000; 
+}
+.devise {
+ width:76px;
+ min-height:227px;
+ border:1px solid #000;  
+}
+.nomcat {
+ width:76px;
+ min-height:45px;
+ border:1px solid #000; 
+}

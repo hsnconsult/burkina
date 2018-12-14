@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="sale_vendeursdet_report" model="ir.actions.report">
+        <field name="name">Details vendeurs</field>
+        <field name="model">report.caisse.report_vendeursdet</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">caisse.report_vendeursdet</field>
+    </record>
+
+    <record id="sale_rayonsdet_report" model="ir.actions.report">
+        <field name="name">Details rayons</field>
+        <field name="model">report.caisse.report_rayonsdet</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">caisse.report_rayonsdet</field>
+    </record>
+
+    <record id="sale_vendeurs_report" model="ir.actions.report">
+        <field name="name">Etat vendeurs</field>
+        <field name="model">report.caisse.report_vendeurs</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">caisse.report_vendeurs</field>
+    </record>
+    <record id="sale_stocks_report" model="ir.actions.report">
+        <field name="name">Etat stocks</field>
+        <field name="model">report.caisse.report_stocks</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">caisse.report_stocks</field>
+    </record>
+    <record id="sale_ventes_report" model="ir.actions.report">
+        <field name="name">Etat ventes</field>
+        <field name="model">report.caisse.report_ventes</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">caisse.report_ventes</field>
+    </record>
+    <record id="sale_ventes_report" model="ir.actions.report">
+            <field name="paperformat_id" ref="hr_holidays.paperformat_hrsummary"/>
+    </record>
+        <report 
+            id="report_cloture"
+            model="pos.session"
+            string="Etat de clôture"
+            report_type="qweb-pdf"
+            name="caisse.report_rapcloture"
+            file="caisse.report_rapcloture"
+            />
+            <report 
+            id="report_etiquette"
+            model="product.template"
+            string="Etiquette Brico"
+            report_type="qweb-pdf"
+            name="caisse.report_bricoetiquette"
+            file="caisse.report_bricoetiquette"
+            />
+        <record id="report_etiquette" model="ir.actions.report">
+            <field name="paperformat_id" ref="hr_holidays.paperformat_hrsummary"/>
+    </record>
+</odoo>
