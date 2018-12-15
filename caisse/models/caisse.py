@@ -13,7 +13,10 @@ from odoo.http import request
 from odoo.addons import decimal_precision as dp
 
 _logger = logging.getLogger(__name__)
-
+class PosOrder(models.Model):
+    _name = "pos.order"
+    _inherit = "pos.order"
+    _description = "Point of Sale Orders"
     @api.model
     def _process_order(self, pos_order):
         prec_acc = self.env['decimal.precision'].precision_get('Account')
