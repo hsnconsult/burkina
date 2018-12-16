@@ -57,5 +57,6 @@
     </record>
         <record id="account_financial_report_line_fr_cdrc1" model="account.financial.html.report.line">
         <field name="domain" eval="['|', ('account_id.code', '=like', '607%'), ('account_id.code', '=like', '6097%'), ('account_id.code', '=like', '608%')]" />
+                <field name="level" eval="2"/>    
     </record>
 </odoo>
