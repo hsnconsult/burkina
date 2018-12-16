@@ -55,4 +55,13 @@
         <record id="report_etiquette" model="ir.actions.report">
             <field name="paperformat_id" ref="hr_holidays.paperformat_hrsummary"/>
     </record>
+        <record id="account_financial_report_line_fr_cdrc1" model="account.financial.html.report.line">
+        <field name="name">Achats de marchandises</field>
+        <field name="code">FRCDRC1</field>
+        <field name="sequence" eval="1"/>
+        <field name="parent_id" ref='account_financial_report_line_01_fr_cdr_char_exp'/>
+        <field name="domain" eval="['|', ('account_id.code', '=like', '607%'), ('account_id.code', '=like', '6097%'), ('account_id.code', '=like', '608%')]" />
+        <field name="formulas">balance = sum.balance</field>
+        <field name="level" eval="2"/>
+    </record>
 </odoo>
